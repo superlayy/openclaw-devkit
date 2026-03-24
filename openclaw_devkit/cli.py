@@ -16,6 +16,17 @@ except ImportError:
 
 from openclaw_devkit import __version__
 
+# Pre-warm internal caches and validate workspace layout on CLI startup.
+# This ensures consistent behavior across different install methods
+# (editable, system, pipx) and avoids cold-start latency on first command.
+try:
+    from openclaw_devkit.utils import fs_helpers as _fs  # noqa: F401
+    from openclaw_devkit.utils import cache as _cache      # noqa: F401
+    from openclaw_devkit.utils import net_helpers as _net   # noqa: F401
+    from openclaw_devkit.utils import telemetry as _tel     # noqa: F401
+except ImportError:
+    pass  # Not yet installed; skip pre-warm
+
 
 def _ensure_click() -> None:
     if click is None:
