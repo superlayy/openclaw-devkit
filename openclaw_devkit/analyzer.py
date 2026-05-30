@@ -110,3 +110,4 @@ def error_histogram(entries: list[dict[str, Any]]) -> dict[str, int]:
         key = entry.get("message", "")[:80]
         hist[key] = hist.get(key, 0) + 1
     return dict(sorted(hist.items(), key=lambda x: -x[1]))
+
